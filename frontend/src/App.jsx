@@ -3,6 +3,7 @@ import NavBar from './components/NavBar';
 import Home from './pages/Home';
 import Board from './components/Board';
 
+
 function App() {
   return (
     <Router>
