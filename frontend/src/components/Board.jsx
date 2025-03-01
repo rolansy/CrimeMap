@@ -1,9 +1,9 @@
 import React, { useState, useCallback } from "react";
 import ReactFlow, { Background, Controls, addEdge, MiniMap, Handle, applyNodeChanges, applyEdgeChanges } from "reactflow";
 import "reactflow/dist/style.css";
-import {mockGraphData} from "./mockdata.js";
+import {mockGraphData2} from "./mockdata.js";
 
-const graphData = mockGraphData;
+const graphData = mockGraphData2;
 
 const initialNodes = graphData.vertices.map(([id, type], index) => ({
     id,
