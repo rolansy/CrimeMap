@@ -1,47 +1,41 @@
 import json
 
-characters = {}
-graph = {}
-statements = {}
-evidences = {}
+def parse_input(input_text):
+    characters = {}
+    graph = {}
+    statements = {}
+    evidences = {}
 
-while True:
-    s = input("Enter Markup : ")
-    if s=="":
-        break
-    if 'victim' in s.lower():
-        characters[s[s.index('(') + 1:-1]] = 'victim'
-    elif 'suspect' in s.lower():
-        characters[s[s.index('(') + 1:-1]] = 'suspect'
-    elif 'crimescene' in s.lower():
-        characters[s[s.index('(') + 1:-1]] = 'crimescene'
-    elif 'witness' in s.lower():
-        characters[s[s.index('(') + 1:-1]] = 'witness'
-    elif 'connect' in s.lower():
-        a_from, b_to, time, fact = s[s.index('(') + 1:-1].split(',')  # a_from and b_to are vertices and the f is the edge
-        if (a_from, b_to) in graph:
-            graph[a_from, b_to].append({fact: time})
-        else:
-            graph[a_from, b_to] = [{fact: time}]
-    elif 'statement' in s.lower():
-        character, statement = s[s.index('(') + 1:-1].split(',')
-        if character in statements:
-            statements[character].append(statement)
-        else:
-            statements[character] = [statement]
-    elif 'evidence' in s.lower():
-        character, evidence = s[s.index('(') + 1:-1].split(',')
-        if character in evidences:
-            evidences[character].append(evidence)
-        else:
-            evidences[character] = [evidence]
+    for s in input_text.split('\n'):
+        if s == "":
+            continue
+        if 'victim' in s.lower():
+            characters[s[s.index('(') + 1:-1]] = 'victim'
+        elif 'suspect' in s.lower():
+            characters[s[s.index('(') + 1:-1]] = 'suspect'
+        elif 'crimescene' in s.lower():
+            characters[s[s.index('(') + 1:-1]] = 'crimescene'
+        elif 'witness' in s.lower():
+            characters[s[s.index('(') + 1:-1]] = 'witness'
+        elif 'connect' in s.lower():
+            a_from, b_to, time, fact = s[s.index('(') + 1:-1].split(',')
+            if (a_from, b_to) in graph:
+                graph[a_from, b_to].append({fact: time})
+            else:
+                graph[a_from, b_to] = [{fact: time}]
+        elif 'statement' in s.lower():
+            character, statement = s[s.index('(') + 1:-1].split(',')
+            if character in statements:
+                statements[character].append(statement)
+            else:
+                statements[character] = [statement]
+        elif 'evidence' in s.lower():
+            character, evidence = s[s.index('(') + 1:-1].split(',')
+            if character in evidences:
+                evidences[character].append(evidence)
+            else:
+                evidences[character] = [evidence]
 
-    print(characters)
-    print(graph)
-    print(statements)
-    print(evidences)
-
-    # Construct the JSON structure
     vertices = []
     for character, role in characters.items():
         vertex = [character, role]
@@ -70,7 +64,12 @@ while True:
         'edges': edges
     }
 
-    with open('output.json', 'w') as f:
-        json.dump(mockGraphData, f, indent=2)
+    return mockGraphData
 
-    print(json.dumps(mockGraphData, indent=2))
+if __name__ == "__main__": 
+    with open('input.txt', 'r') as file:
+        input_text = file.read()
+    result = parse_input(input_text)
+    with open('output.json', 'w') as f:
+        json.dump(result, f, indent=2)
+    print(json.dumps(result, indent=2))
