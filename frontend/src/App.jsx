@@ -1,20 +1,16 @@
+import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import NavBar from './components/NavBar';
-import Home from './pages/Home';
-import Board from './components/Board';
+import EvidenceStorageSystem from './pages/evidence/evidence';
+import HomePage from './pages/Home'; // Ensure this path is correct
 
-
-function App() {
+const App = () => {
   return (
     <Router>
       <NavBar />
       <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/folder1" element={<div>Folder 1 Content</div>} />
-        <Route path="/folder2" element={<Board/>} />
-        <Route path="/folder3" element={<div>Folder 3 Content</div>} />
-        <Route path="/folder4" element={<div>Folder 4 Content</div>} />
-        <Route path="/folder5" element={<div>Folder 5 Content</div>} />
+        <Route path="/" element={<HomePage />} />
+        <Route path="/evidence" element={<EvidenceStorageSystem />} />
       </Routes>
     </Router>
   );
