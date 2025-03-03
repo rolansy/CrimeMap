@@ -85,7 +85,7 @@ const Board = () => {
       const statementNodes = [];
       const statementEdges = [];
 
-      data.vertices.forEach(([id, type, details], index) => {
+      data.vertices.forEach(([id, details], index) => {
         if (details && details.statement) {
           details.statement.forEach((statement, statementIndex) => {
             const statementNodeId = `${id}-statement-${statementIndex}`;
@@ -151,22 +151,6 @@ const Board = () => {
     setNodes((nds) => nds.concat(newNode));
     setHistory([...history, { nodes, edges }]);
     setRedoStack([]);
-  };
-
-  const handleNodeLabelChange = (id, newLabel) => {
-    setNodes((nds) =>
-      nds.map((node) =>
-        node.id === id ? { ...node, data: { ...node.data, label: newLabel } } : node
-      )
-    );
-    setHistory([...history, { nodes, edges }]);
-    setRedoStack([]);
-  };
-
-  const handleNodeLabelEdit = (id, e) => {
-    if (e.key === 'Enter') {
-      handleNodeLabelChange(id, e.target.value);
-    }
   };
 
   const deleteSelected = () => {
