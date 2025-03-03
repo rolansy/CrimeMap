@@ -1,35 +1,36 @@
 import React, { useState, useCallback } from "react";
-import ReactFlow, { Background, Controls, addEdge, MiniMap, Handle, applyNodeChanges, applyEdgeChanges } from "reactflow";
+import ReactFlow, { Background, Controls, addEdge, MiniMap, applyNodeChanges, applyEdgeChanges } from "reactflow";
 import "reactflow/dist/style.css";
-import {mockGraphData2} from "./mockdata.js";
+import { mockGraphData2 } from "./mockdata.js";
 
 const graphData = mockGraphData2;
 
-const initialNodes = graphData.vertices.map(([id, type], index) => ({
-    id,
-    data: { label: `${id.toUpperCase()}` },
-    position: { x: index * 200, y: 100 },
-    style: {
-        backgroundColor: type === "suspect" ? "red" : type === "victim" ? "blue" : type === "witness" ? "yellow" : "gray",
-        color: "white",
-        padding: "10px",
-        borderRadius: type === "crimescene" ? "5px" : "50%",
-        width: 60,
-        height: 30,
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center"
-    }
+const initialNodes = graphData.vertices.map(([id, type, details], index) => ({
+  id,
+  data: { label: `${id.toUpperCase()}` },
+  position: { x: index * 200, y: 100 },
+  style: {
+    backgroundColor: type === "suspect" ? "red" : type === "victim" ? "blue" : type === "witness" ? "yellow" : "gray",
+    color: "white",
+    padding: "10px",
+    borderRadius: type === "crimescene" ? "5px" : "50%",
+    width: 60,
+    height: 30,
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center"
+  },
+  title: `Statement: ${details.statement.join(", ")}${details.evidence ? `\nEvidence: ${details.evidence.join(", ")}` : ""}`
 }));
 
 const initialEdges = graphData.edges.map(([source, target, details], index) => ({
-    id: `edge-${index}`,
-    source,
-    target,
-    label: `Time, Facts, Assumptions`,
-    data: { title: `Time: ${details.time}\nFacts: ${details.facts.join(", ")}\nAssumptions: ${details.assumptions.join(", ")}` },
-    style: { stroke: "black" },
-    labelBgStyle: { fill: "white", padding: "4px", borderRadius: "5px" }
+  id: `edge-${index}`,
+  source,
+  target,
+  label: `Time, Facts, Assumptions`,
+  data: { title: `Time: ${details.time}\nFacts: ${details.facts.join(", ")}\nAssumptions: ${details.assumptions.join(", ")}` },
+  style: { stroke: "black" },
+  labelBgStyle: { fill: "white", padding: "4px", borderRadius: "5px" }
 }));
 
 const Board = () => {
