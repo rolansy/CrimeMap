@@ -57,7 +57,7 @@ const Board = () => {
 
   const handleSubmit = async () => {
     try {
-      const response = await fetch('http://localhost:5000/parse', {
+      const response = await fetch('https://crimemap-v1.onrender.com/parse', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
